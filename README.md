@@ -1,9 +1,5 @@
 # css-flexbox
 
-[兼容性](https://caniuse.com/#search=flex)
-
-如果懒的看长篇大论，直接看【总结】和【注意事项】即可。
-
 ## 前言
 
 css3引入了一种新的布局模型flex布局。flex是flexible-box的缩写，一般称之为弹性盒模型。和css3其他属性不一样，flexbox并不是一个属性，而是一个模块，包括多个css3属性。flex布局提供一种更加有效的方式来进行容器内的项目布局，以适应各种类型的显示设备和各种尺寸的屏幕
@@ -12,21 +8,16 @@ css3引入了一种新的布局模型flex布局。flex是flexible-box的缩写�
 
 flexbox布局的语法规范经过几年发生了很大的变化。从2007年07月，flex第一版本的工作草案发布，到2012年09月，flex最新版本成为候选推荐。flex主要经历了三个版本：旧版本、混合版本、新版本。
 
-1. 旧版本 display:box | inline-box
+[相关兼容性查看](https://caniuse.com/#search=flex)
 
-IE浏览器不支持，windows下的safari浏览器只支持旧版本的写法且需要添加前缀，移动端可以兼容到andriod2.1-4.3和ios3.2-6.1也需要添加前缀
+## 基本概念
 
-2. 混合版本 display:flexbox | inline-flexbox
+伸缩容器默认存在两条轴: 水平的主轴(main-axis) 和垂直的侧轴(cross-axis)，主轴方向不一定是水平的，它主要取决于flex-direction属性，主轴起点叫main-start，主轴终点叫main-end；侧轴起点叫cross-start，侧轴终点叫cross-end。
 
-该版本只有IE10支持，且需要添加前缀-ms-
+伸缩项目默认沿主轴排列。单个伸缩项目占据的主轴空间叫main-size，占据的侧轴空间叫cross-size。
+伸缩项目的main-size和cross-size主要由宽度或高度决定
 
-3. 新版本 display: flex | inline-flex
-
-该版本兼容IE11+、firefox、safari、chrome、opera及移动端，但移动端ios7.1-8.4需要添加前缀-webkit-
-
-## 相关属性
-
-### display
+### 伸缩容器
 
 要让一个元素变成伸缩容器，需要使用display属性。采用flex布局的元素，称为伸缩容器(flex container)，容器内的子元素称为伸缩项目(flex item)。
 
@@ -43,15 +34,6 @@ display: box | inline-box;
 ```
 
 [demo](https://demo.xiaohuochai.site/css/flex/f1.html)
-
-## 基本概念
-
-伸缩容器默认存在两条轴: 水平的主轴(main-axis) 和垂直的侧轴(cross-axis)，主轴方向不一定是水平的，它主要取决于flex-direction属性，主轴起点叫main-start，主轴终点叫main-end；侧轴起点叫cross-start，侧轴终点叫cross-end。
-
-伸缩项目默认沿主轴排列。单个伸缩项目占据的主轴空间叫main-size，占据的侧轴空间叫cross-size。
-伸缩项目的main-size和cross-size主要由宽度或高度决定
-
-### 伸缩容器
 
 以下6个属性作用在伸缩容器上
 
@@ -100,7 +82,6 @@ box-lines: single[默认] | multiple | N/A
 伸缩项目的排列顺序同样与direction和wrinting-mode有关系
 
 [demo](https://demo.xiaohuochai.site/css/flex/f5.html)
-
 
 #### 伸缩流
 
@@ -159,7 +140,6 @@ box-align: start | center | end | baseline | stretch[默认]
 侧轴对齐方式与direction、writing-mode、flex-flow都有关
 
 [demo](https://demo.xiaohuochai.site/css/flex/f11.html)
-
 
 #### 堆栈伸缩行
 
@@ -305,27 +285,32 @@ order的属性值可以是负数，但不能是小数
 
 [demo](https://demo.xiaohuochai.site/css/flex/f19.html)
 
-## 总结
+## 学习完玩个小游戏
 
+[http://flexboxfroggy.com/](http://flexboxfroggy.com/)
 
 ## 注意事项
 
 * 浏览器会将任何直接在伸缩容器里的连续文字块包起来成为匿名伸缩项目
-
 * 使用flex布局实现上是使元素FFC化(flex formatting context伸缩格式化上下文)，FFC是普通流的一种。而浮动流和定位流以及CSS其他属性对FFC是有影响的，主要表现在以下几点:
+    * float、clear和vertical-align属性在伸缩项目上没有效果
+    * 伸缩容器的margin与其内容的margin不会重叠
+    * text-align属性在伸缩容器上没有效果，因为其只可应用于块级block容器
+    * 另外，columns属性伸缩容器上没有效果
+* 旧版本flex要求伸缩项目必须是block元素
+* 旧版本flex的伸缩流方向中的reverse值，只改变伸缩项目的排列顺序，并不改变其对齐方式。所以建议使用direction:rtl来实现伸缩流反向效果
+* 旧版本flex不支持伸缩流换行，所以在其他版本flex中尽量不要使用换行操作
+* 旧版本flex的主轴对齐属性中没有扩散对齐属性space-around，所以在其他版本flex中尽量不要使用该属性值
+* 旧版本flex的伸缩性只有一个值，表示基于伸缩项目本身尺寸大小的扩展或收缩比率，旧版本的-webkit-box-flex:1;相当于新版本的flex:auto;所以要想实现不基于伸缩项目本身尺寸大小的伸缩需要显式地将伸缩项目的宽度width设置为0。注意该值支持小数，但不能为负数
+* 旧版本flex的显示顺序是以1为默认值的正整数，而新版本flex的显示顺序是以0为默认值的自然数。所以在设置显示顺序时，跳过1，从2开始设置
+* 在flex容器上不能正常应用text-overflow:ellipsis属性，转为容器项目完成打点
 
-  * float、clear和vertical-align属性在伸缩项目上没有效果
-  * 伸缩容器的margin与其内容的margin不会重叠
-  * text-align属性在伸缩容器上没有效果，因为其只可应用于块级block容器
-  * 另外，columns属性伸缩容器上没有效果
+更多[flexbugs](https://github.com/philipwalton/flexbugs)
 
-
-## related
+## 本页转载推荐博文
 
 [深入理解css弹性盒模型flex](http://www.cnblogs.com/xiaohuochai/p/5323146.html#anchor4-1)
 
 [CSS旧版flex及兼容](http://www.cnblogs.com/xiaohuochai/p/5334936.html)
-
-
 
 
